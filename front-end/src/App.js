@@ -14,11 +14,16 @@ class App extends React.Component {
 
   //Backend Requests
   getItems = () => {
-    fetch("route for backend")
+    fetch("http://127.0.0.1:9393/items/")
     .then(r => r.json())
     .then(data => {
+      console.log(data.items)
       this.setState({items: data.items})
     })
+  }
+
+  componentDidMount = () => {
+    this.getItems()
   }
 
 
