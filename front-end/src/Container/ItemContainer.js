@@ -1,9 +1,10 @@
 import ItemCard from '../Components/ItemCard'
+import "semantic-ui-css/semantic.min.css";
 
-const ItemContainer = () => {
+const ItemContainer = (props) => {
     return (
-      <div>
-        {/* items.map map over all items to render <ItemCard />  */}
+      <div className="ui four stackable cards">
+        {props.items.map((itemData, index) => <ItemCard item={itemData} key={index}/>)}
       </div>
        
     )
