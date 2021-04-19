@@ -10,6 +10,7 @@ class App extends React.Component {
     items: [],
     addItem: false,
     currentItem: {},
+    currentUser: {},
   }
 
   //Backend Requests
@@ -29,8 +30,12 @@ class App extends React.Component {
           <h1>Welcome to Jankazon</h1>
         </div>
         <Switch>  
-            <Route exact path="/marketplace" component={MarketPlace}/>
-            <Route exact path="/users/:id" component={UserPage}/>
+            <Route exact path="/marketplace" render={()=> {
+              return <MarketPlace items={this.state.items}/>
+            }}/>
+            <Route exact path="/users/:id" render={()=> {
+              return <UserPage currentUser={this.state.user} items={this.state.items}/>
+            }}/>
         </Switch>
       </div>
     )
