@@ -5,15 +5,21 @@ User.destroy_all
 Category.destroy_all
 
 # Seeding Users
-User.create(name: Faker::Name.name, password: Faker::Lorem.word)
+puts "Creating Users"
+5.times do
+    User.create(name: Faker::Name.name, password: Faker::Lorem.word)
+end
 
 # Seeding Categories
+puts "Creating Categories"
 clothing = Category.create(name: "clothing")
 shoes = Category.create(name: "shoes")
 accesories = Category.create(name: "accesories")
 
 # Seeding Items
-Item.create(name: Faker::Commerce.product_name, image_url: Faker::LoremFlickr.image, seller_id: Seller.all.sample.id, category_id: Category.all.sample.id, description: Faker::Lorem.sentence, price: Faker::Commerce.price, condition: "used")
-
+puts "Creating Items"
+50.times do
+    Item.create(name: Faker::Commerce.product_name, image_url: Faker::LoremFlickr.image, seller_id: User.all.sample.id, category_id: Category.all.sample.id, description: Faker::Lorem.sentence, price: Faker::Commerce.price, condition: "used")
+end
 # Seeding Purchases
-Purchase.create(item_id: Item.all.sample.id, seller_id: Seller.all.sample.id, purchaser_id: Purchaser.all.sample.id)
+# Purchase.create(item_id: Item.all.sample.id, seller_id: Seller.all.sample.id, purchaser_id: Purchaser.all.sample.id)

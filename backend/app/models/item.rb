@@ -1,5 +1,5 @@
 class Item < ActiveRecord::Base
-    belongs_to :seller
+    belongs_to :seller, :class_name => "User"
     belongs_to :category
 
 end
