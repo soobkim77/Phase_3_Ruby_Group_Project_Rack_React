@@ -7,17 +7,21 @@
 
 ### Table Items
     :name
-    :price
     :image_url
-    :is_available
-    :condition
     :seller_id(user_id)
     :category_id
+
+    #### Stretching
+
+    :price
+    :is_available
+    :condition
+    
 
 ### Table Category
     :name
 
-### Purchases
+### Table Purchases (stretching)
     :item_id
     :seller_id
     :purchaser_id
