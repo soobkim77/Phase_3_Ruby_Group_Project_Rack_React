@@ -1,18 +1,20 @@
-const ItemCard = () => {
-    return (
-        <div>
-            <div>
-            //item img
-            // price
-            </div>
-            
-            <div>
-                //item name
-                //owner
-                //description
-            </div>
+import { Card, Image } from "semantic-ui-react";
 
-        </div>
+const ItemCard = (props) => {
+    return (
+      <Card raised>
+        <Image src={props.item.imageUrl} />
+        <Card.Content>
+          <Card.Header>
+              {props.item.name}
+          </Card.Header>
+          <Card.Description>
+              Price: {props.item.price} <br />
+              Condition: {props.item.condition} <br />
+              Description: {props.item.description} <br />
+          </Card.Description>
+        </Card.Content>
+      </Card>
     )
 }
 

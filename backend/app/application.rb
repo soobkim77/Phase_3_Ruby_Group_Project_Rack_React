@@ -11,8 +11,11 @@ class Application
       end
       return [200, { 'Content-Type' => 'application/json' }, [ {:items => items}.to_json ]]
 
-    else
-      resp.write "Path Not Found"
+    elsif req.path.match(/users/) && req.get?
+      users = User.all.map do |u|
+        {id: u.id, username: u.name, password: u.password}
+      end
+      return [200, { 'Content-Type' => 'application/json' }, [ {:users => users}.to_json ]]
 
     end
 
