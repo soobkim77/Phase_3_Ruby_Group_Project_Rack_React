@@ -1,11 +1,12 @@
+import React from 'react';
 import ItemForm from '../Components/ItemForm';
 
 
-const UserPage = () => {
+const UserPage = (props) => {
     return(
         <div>
-            {/* {addItem ? <ItemForm/> : null} */}
-            <button onClick={null}>Add an Item</button>
+            { props.addItem ? <ItemForm handleSubmit={props.handleSubmit}/> : null }
+            <button onClick={props.handleClick}>Add an Item</button>
         </div>
     )
 }
