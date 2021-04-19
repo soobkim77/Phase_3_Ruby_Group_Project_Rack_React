@@ -10,12 +10,13 @@
     :image_url
     :seller_id(user_id)
     :category_id
+    :description
+    :price
+    :condition
 
     #### Stretching
-
-    :price
     :is_available
-    :condition
+
     
 
 ### Table Category
@@ -28,7 +29,7 @@
 
 
 ## Frontend
-/login
+/login (skipped)
 copypasta user validation from last project
 
 /market
@@ -42,7 +43,7 @@ add item
 
 /market/:item_id
 display specific item 
-purchase
+purchase(stretch)
 
 add to watchlist(advanced)
 
