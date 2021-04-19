@@ -1,5 +1,6 @@
 import React from 'react';
 import {Route, Switch} from 'react-router-dom'
+import "semantic-ui-css/semantic.min.css";
 import './App.css';
 import MarketPlace from './Pages/MarketPlace'
 import UserPage from './Pages/UserPage'
@@ -82,14 +83,14 @@ class App extends React.Component {
           : 
           
           <LogIn user={this.state.user} handleUsernameChange={this.handleUsernameChange} handlePasswordChange={this.handlePasswordChange}  handleLogin={(e) => this.validateUser(e)} />} 
-        <h1>Welcome to Jankazon</h1>
+        <h1 className="ui header">Welcome to Jankazon</h1>
         </div>
         <Switch>  
             <Route exact path="/marketplace" render={()=> {
               return <MarketPlace items={this.state.items}/>
             }}/>
             <Route exact path="/users/:id" render={()=> {
-              return <UserPage currentUser={this.state.user} items={this.state.items}/>
+              return <UserPage currentUser={this.state.currentUser} items={this.state.items}/>
             }}/>
         </Switch>
       </div>
