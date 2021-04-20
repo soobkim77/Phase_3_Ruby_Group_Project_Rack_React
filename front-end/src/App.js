@@ -114,6 +114,19 @@ class App extends React.Component {
     return items
   }
 
+  viewItem = item => {
+    console.log(item)
+    // this.setState({
+    //   currentItem: item
+    // });
+  };
+
+  clearCurrentItem = () => {
+    this.setState({
+      currentItem: {}
+    });
+  };
+
 
   render(){
     return (
@@ -135,7 +148,7 @@ class App extends React.Component {
               return <MarketPlace items={this.state.items} />
             }}/>
             <Route exact path="/users/:id" render={()=> {
-              return <UserPage currentUser={this.state.user} handleClick={this.handleClick} handleSubmit={this.handleSubmit} addItem={this.state.addItem} items={this.itemsByUser()}/>
+              return <UserPage currentUser={this.state.user} handleClick={this.handleClick} handleSubmit={this.handleSubmit} addItem={this.state.addItem} items={this.itemsByUser()} viewItem={this.setCurrentItem} clearCurrentItem={this.clearCurrentItem}/>
             }}/>
         </Switch>
       </div>
