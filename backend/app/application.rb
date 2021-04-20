@@ -33,7 +33,7 @@ class Application
   
 
   elsif req.delete?
-
+    binding.pry
     id = req.path.split("/items/").last
     Item.find(id).delete
 
