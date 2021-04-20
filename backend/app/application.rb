@@ -25,6 +25,10 @@ class Application
       item = Item.create(name:data["name"], image_url: data["image"], seller_id: seller.id, category_id: category.id, description: data["description"], price: data["price"], condition: data["condition"])
       return [200, { 'Content-Type' => 'application/json' }, [item.format_item.to_json ]]
     
+    elsif req.path.match(/users/) && req.post?
+      data = data = JSON.parse req.body.read
+      user = User.create(name: data["name"], password: data["password"])
+      return [200, { 'Content-Type' => 'application/json' }, [user.format_user.to_json ]]
     end
 
     resp.finish
