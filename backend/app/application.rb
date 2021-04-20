@@ -33,7 +33,6 @@ class Application
   
 
   elsif req.delete?
-
     id = req.path.split("/items/").last
     Item.find(id).delete
 
