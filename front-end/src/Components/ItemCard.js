@@ -1,7 +1,6 @@
 import { Card, Image } from "semantic-ui-react";
 
 const ItemCard = (props) => {
-  console.log(props.items)
     return (
       <Card raised>
         <Image src={props.item.imageUrl} />
