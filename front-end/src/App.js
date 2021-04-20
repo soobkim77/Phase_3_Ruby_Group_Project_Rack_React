@@ -76,8 +76,8 @@ class App extends React.Component {
     let newItem = {
       name: e.target.name.value,
       image: e.target.image.value,
-      seller_id: e.target.seller_id.value,
-      category_id: e.target.category_id.value,
+      seller: e.target.seller.value,
+      category: e.target.category.value,
       description: e.target.description.value,
       price: e.target.price.value,
       condition: e.target.condition.value
@@ -91,10 +91,10 @@ class App extends React.Component {
 
     fetch("http://127.0.0.1:9393/items/", reqPackage)
     .then(res => res.json())
-    .then(item => {
-  
+
+    .then(data => {
       this.setState({
-        items: [...this.state.items, item],
+        items: [...this.state.items, data],
         addItem: !this.state.addItem
       })
     })

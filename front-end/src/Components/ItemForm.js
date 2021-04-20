@@ -9,13 +9,13 @@ const ItemForm = (props) => {
                 <br/>
                 <input type="text" name="image" placeholder="Enter item's image URL..."/>
                 <br/>
-                <input type="integer" name="seller_id" placeholder="Enter your seller ID..."/>
+                <input type="text" name="seller" placeholder="Enter seller name..."/>
                 <br/>
-                <input type="integer" name="category_id" placeholder="Enter item's category ID..."/>
+                <input type="text" name="category" placeholder="Enter item's category..."/>
                 <br/>
                 <input type="text" name="description" placeholder="Enter item description..."/>
                 <br/>
-                <input type="text" name="price" placeholder="Enter item price"/>
+                <input type="text" name="price" placeholder="Enter item price..."/>
                 <br/>
                 <input type="text" name="condition" placeholder="Enter item condition..."/>
                 <br/>
