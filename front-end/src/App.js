@@ -24,6 +24,7 @@ class App extends React.Component {
       password: "",
       id: ""
     },
+    itemView: false
   }
 
   //Backend Requests
@@ -150,11 +151,12 @@ class App extends React.Component {
   }
 
 
-  viewItem = item => {
-    console.log(item)
-    // this.setState({
-    //   currentItem: item
-    // });
+  viewItem = (e,item) => {
+    e.stopPropagation()
+    this.setState({
+      currentItem: item,
+      itemView: true
+    });
   };
 
   clearCurrentItem = () => {
@@ -207,6 +209,7 @@ class App extends React.Component {
           <LogIn log={this.state.login} user={this.state.user} handleUsernameChange={this.handleUsernameChange} handlePasswordChange={this.handlePasswordChange}  handleLogin={(e) => this.createUser(e)} />
           }
         </div>)}
+        
         <h1 className="ui header welcome">Welcome to Jankazon</h1>
           
         <Switch>  
@@ -214,7 +217,7 @@ class App extends React.Component {
               return <MarketPlace items={this.state.items} />
             }}/>
             <Route exact path="/users/:id" render={()=> {
-              return <UserPage remove={this.removeItem} currentUser={this.state.user} handleClick={this.handleClick} handleSubmit={this.handleSubmit} addItem={this.state.addItem} items={this.itemsByUser()}/>
+              return <UserPage itemView={this.state.itemView} item={this.state.currentItem} remove={this.removeItem} currentUser={this.state.user} handleClick={this.handleClick} handleSubmit={this.handleSubmit} addItem={this.state.addItem} view={this.viewItem} items={this.itemsByUser()}/>
             }}/>
         </Switch>
       </div>

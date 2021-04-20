@@ -2,7 +2,7 @@ import { Card, Image } from "semantic-ui-react";
 
 const ItemCard = (props) => {
     return (
-      <Card raised>
+      <Card raised onClick={(e) => props.view(e, props.item)}>
         <Image src={props.item.imageUrl} />
         <Card.Content>
           <Card.Header>
