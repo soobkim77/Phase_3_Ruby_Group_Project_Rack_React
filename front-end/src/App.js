@@ -125,7 +125,7 @@ class App extends React.Component {
         </div>
         <Switch>  
             <Route exact path="/marketplace" render={()=> {
-              return <MarketPlace items={this.state.items}/>
+              return <MarketPlace items={this.state.items} />
             }}/>
             <Route exact path="/users/:id" render={()=> {
               return <UserPage currentUser={this.state.user} items={this.state.items} handleClick={this.handleClick} handleSubmit={this.handleSubmit} addItem={this.state.addItem}/>

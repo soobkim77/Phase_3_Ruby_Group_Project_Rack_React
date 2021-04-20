@@ -12,6 +12,7 @@ const ItemCard = (props) => {
               Price: {props.item.price} <br />
               Condition: {props.item.condition} <br />
               Description: {props.item.description} <br />
+              Category: {props.item.category} <br />
           </Card.Description>
         </Card.Content>
       </Card>
