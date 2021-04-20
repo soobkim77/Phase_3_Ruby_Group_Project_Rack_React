@@ -1,10 +1,11 @@
 import React from 'react';
-import {Route, Switch, Link} from 'react-router-dom'
+import {Route, Switch} from 'react-router-dom'
 import "semantic-ui-css/semantic.min.css";
 import './App.css';
 import MarketPlace from './Pages/MarketPlace'
 import UserPage from './Pages/UserPage'
 import LogIn from './Components/LogIn'
+import NavBar from './Components/NavBar'
 
 
 class App extends React.Component {
@@ -150,7 +151,8 @@ class App extends React.Component {
   render(){
     return (
       <div>
-        <Link to={`users/${this.state.currentUser.id}`}>my page</Link>
+        <NavBar user={this.state.currentUser}/>
+        
         <div>
           <button onClick={() => {this.setState({login: false, createUser: true})}}>LogIn</button>
           <button onClick={() => {this.setState({createUser: false, login: true})}}>Create User</button>
@@ -166,8 +168,8 @@ class App extends React.Component {
           :
           <LogIn log={this.state.login} user={this.state.user} handleUsernameChange={this.handleUsernameChange} handlePasswordChange={this.handlePasswordChange}  handleLogin={(e) => this.createUser(e)} />
           }
-        <h1 className="ui header">Welcome to Jankazon</h1>
         </div>
+        <h1 className="ui header">Welcome to Jankazon</h1>
         <Switch>  
             <Route exact path="/marketplace" render={()=> {
               return <MarketPlace items={this.state.items} />
