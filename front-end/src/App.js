@@ -206,7 +206,7 @@ class App extends React.Component {
           :
           <LogIn log={this.state.login} user={this.state.user} handleUsernameChange={this.handleUsernameChange} handlePasswordChange={this.handlePasswordChange}  handleLogin={(e) => this.createUser(e)} />
           }
-        </div>
+        </div>)}
         <h1 className="ui header welcome">Welcome to Jankazon</h1>
           
         <Switch>  
