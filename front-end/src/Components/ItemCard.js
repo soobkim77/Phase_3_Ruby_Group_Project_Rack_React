@@ -1,7 +1,6 @@
 import { Card, Image } from "semantic-ui-react";
 
 const ItemCard = (props) => {
-  console.log(props.items)
     return (
       <Card raised>
         <Image src={props.item.imageUrl} />
@@ -15,6 +14,10 @@ const ItemCard = (props) => {
               Description: {props.item.description} <br />
               Category: {props.item.category} <br />
           </Card.Description>
+          {props.myPage ? <button 
+                    className="userRmvBtn" 
+                    id={props.item.id} 
+                    onClick={()=>props.remove(props.item)}>x</button> : null}
         </Card.Content>
       </Card>
     )

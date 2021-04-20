@@ -1,18 +1,21 @@
 import React from 'react';
-import {Route, Switch, Link} from 'react-router-dom'
+import {Route, Switch, withRouter} from 'react-router-dom'
 import "semantic-ui-css/semantic.min.css";
 import './App.css';
 import MarketPlace from './Pages/MarketPlace'
 import UserPage from './Pages/UserPage'
 import LogIn from './Components/LogIn'
+import NavBar from './Components/NavBar'
 
 
 class App extends React.Component {
+  
   state = {
     items: [],
     users: [],
     addItem: false,
     login: true,
+    createUser: true,
     currentItem: {},
     currentUser: {},
     isLoggedIn: false,
@@ -49,19 +52,51 @@ class App extends React.Component {
   }
 
   validateUser = (e) => {
-    e.stopPropagation()
+    // e.stopPropagation()
     e.preventDefault()
     let users = this.state.users
     let correctUser = users.find(user => user.username === this.state.user.username)
     if (correctUser){
       if (correctUser.password === this.state.user.password){
       this.setState({isLoggedIn: true, currentUser: correctUser, login: true})
-    }
-    else {
-      alert('Incorrect Password, Please Try Again')
-    }
+      this.props.history.push('/marketplace')
+        }
+      else {
+          alert('Incorrect Password, Please Try Again')
+        }
+      }
+    else{ alert("Username not found, Please Try Again")}
   }
-  else{ alert("Username not found, Please Try Again")}
+
+  createUser = (e) => {
+    e.preventDefault()
+    let allUsers = this.state.users
+    let duplicateUser = allUsers.find(user => user.username === this.state.user.username)
+    let newUser = {
+      name: this.state.user.username,
+      password: this.state.user.password
+    }
+    let reqPackage = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newUser)}
+    if(duplicateUser){
+      alert('Username Already Exists')
+    }
+    else{
+    fetch('http://127.0.0.1:9393/users/', reqPackage)
+      .then(r => r.json())
+      .then(data => {
+        alert("User created, please log in to continue!")
+        this.setState({
+          users: [...this.state.users, data],
+          login: true,
+          createUser: true
+        })
+      })
+    }
   }
 
   componentDidMount = () => {
@@ -114,6 +149,7 @@ class App extends React.Component {
     return items
   }
 
+
   viewItem = item => {
     console.log(item)
     // this.setState({
@@ -127,28 +163,58 @@ class App extends React.Component {
     });
   };
 
+  removeItem = (deleteItem) => {
+    fetch(`http://127.0.0.1:9393/items/${deleteItem.id}`, {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json'
+      } 
+    })
+
+    this.setState({
+      items: this.state.items.filter(item => item !== deleteItem)
+    })
+  }
+
+  handleLogout = () => {
+    this.setState({user: {
+      username: "",
+      password: "",
+      id: ""
+    }})
+  }
 
   render(){
     return (
       <div>
-        <Link to={`users/${this.state.currentUser.id}`}>my page</Link>
-        <div>
-          <button onClick={() => {this.setState({login: false})}}>LogIn</button>
-          {this.state.login ? 
+        {this.state.isLoggedIn ?
+          (<NavBar user={this.state.currentUser} isLoggedIn={this.state.isLoggedIn}/>)
+          :
+          (
+          <div>
+            <button onClick={() => {this.setState({login: false, createUser: true})}}>LogIn</button>
+            <button onClick={() => {this.setState({createUser: false, login: true})}}>Create User</button>
+            {this.state.login ? 
           
-          null 
+            null 
           
-          : 
-          
-          <LogIn user={this.state.user} handleUsernameChange={this.handleUsernameChange} handlePasswordChange={this.handlePasswordChange}  handleLogin={(e) => this.validateUser(e)} />} 
-        <h1 className="ui header">Welcome to Jankazon</h1>
+            : 
+         
+          <LogIn log={this.state.login} user={this.state.user} handleUsernameChange={this.handleUsernameChange} handlePasswordChange={this.handlePasswordChange}  handleLogin={(e) => this.validateUser(e)} />} 
+          {this.state.createUser ?
+          null
+          :
+          <LogIn log={this.state.login} user={this.state.user} handleUsernameChange={this.handleUsernameChange} handlePasswordChange={this.handlePasswordChange}  handleLogin={(e) => this.createUser(e)} />
+          }
         </div>
+        <h1 className="ui header welcome">Welcome to Jankazon</h1>
+          
         <Switch>  
             <Route exact path="/marketplace" render={()=> {
               return <MarketPlace items={this.state.items} />
             }}/>
             <Route exact path="/users/:id" render={()=> {
-              return <UserPage currentUser={this.state.user} handleClick={this.handleClick} handleSubmit={this.handleSubmit} addItem={this.state.addItem} items={this.itemsByUser()} viewItem={this.setCurrentItem} clearCurrentItem={this.clearCurrentItem}/>
+              return <UserPage remove={this.removeItem} currentUser={this.state.user} handleClick={this.handleClick} handleSubmit={this.handleSubmit} addItem={this.state.addItem} items={this.itemsByUser()}/>
             }}/>
         </Switch>
       </div>
@@ -156,4 +222,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default withRouter(App);

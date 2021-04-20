@@ -2,7 +2,7 @@ const LogIn = (props) => {
     return(
         <div>
                 <div>
-                    Login
+                    {props.log ? "Create a User" : "Log-In"}
                 </div>
                 <form  onSubmit={props.handleLogin}>
 
@@ -31,7 +31,7 @@ const LogIn = (props) => {
                             />
                     </div>
 
-                    <button  type="submit"  value="submit">Login</button>
+                    <button  type="submit"  value="submit">{props.log ? "Create a User" : "Log-In"}</button>
                 </form>
         </div>
     )
