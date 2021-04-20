@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, Switch} from 'react-router-dom'
+import {Route, Switch, withRouter} from 'react-router-dom'
 import "semantic-ui-css/semantic.min.css";
 import './App.css';
 import MarketPlace from './Pages/MarketPlace'
@@ -9,6 +9,7 @@ import NavBar from './Components/NavBar'
 
 
 class App extends React.Component {
+  
   state = {
     items: [],
     users: [],
@@ -58,6 +59,7 @@ class App extends React.Component {
     if (correctUser){
       if (correctUser.password === this.state.user.password){
       this.setState({isLoggedIn: true, currentUser: correctUser, login: true})
+      this.props.history.push('/marketplace')
         }
       else {
           alert('Incorrect Password, Please Try Again')
@@ -172,17 +174,19 @@ class App extends React.Component {
   render(){
     return (
       <div>
-        <NavBar user={this.state.currentUser} logout={this.handleLogout}/>
-        
-        <div>
-          <button onClick={() => {this.setState({login: false, createUser: true})}}>LogIn</button>
-          <button onClick={() => {this.setState({createUser: false, login: true})}}>Create User</button>
-          {this.state.login ? 
+        {this.state.isLoggedIn ?
+          (<NavBar user={this.state.currentUser} isLoggedIn={this.state.isLoggedIn}/>)
+          :
+          (
+          <div>
+            <button onClick={() => {this.setState({login: false, createUser: true})}}>LogIn</button>
+            <button onClick={() => {this.setState({createUser: false, login: true})}}>Create User</button>
+            {this.state.login ? 
           
-          null 
+            null 
           
-          : 
-          
+            : 
+         
           <LogIn log={this.state.login} user={this.state.user} handleUsernameChange={this.handleUsernameChange} handlePasswordChange={this.handlePasswordChange}  handleLogin={(e) => this.validateUser(e)} />} 
           {this.state.createUser ?
           null
@@ -191,6 +195,7 @@ class App extends React.Component {
           }
         </div>
         <h1 className="ui header welcome">Welcome to Jankazon</h1>
+          
         <Switch>  
             <Route exact path="/marketplace" render={()=> {
               return <MarketPlace items={this.state.items} />
@@ -204,4 +209,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default withRouter(App);
