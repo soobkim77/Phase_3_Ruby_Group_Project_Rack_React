@@ -7,7 +7,7 @@ class Application
     if req.path.match(/items/) && req.get?
 
       items = Item.all.map do |i|
-        {id: i.id, name: i.name, category: i.category.name, seller: i.seller, imageUrl: i.image_url, description: i.description, price: i.price, condition: i.condition}
+        i.format_item
       end
       return [200, { 'Content-Type' => 'application/json' }, [ {:items => items}.to_json ]]
 
@@ -23,7 +23,7 @@ class Application
       category = Category.find_by(name: data["category"])
       seller = User.find_by(name: data["seller"])
       item = Item.create(name:data["name"], image_url: data["image"], seller_id: seller.id, category_id: category.id, description: data["description"], price: data["price"], condition: data["condition"])
-      return [200, { 'Content-Type' => 'application/json' }, [ item.to_json ]]
+      return [200, { 'Content-Type' => 'application/json' }, [item.format_item.to_json ]]
     
     end
 
