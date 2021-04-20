@@ -17,6 +17,14 @@ class Application
       end
       return [200, { 'Content-Type' => 'application/json' }, [ {:users => users}.to_json ]]
 
+    elsif req.path.match(/items/) && req.post?
+            
+      data = JSON.parse req.body.read
+      category = Category.find_by(name: data["category"])
+      seller = User.find_by(name: data["seller"])
+      item = Item.create(name:data["name"], image_url: data["image"], seller_id: seller.id, category_id: category.id, description: data["description"], price: data["price"], condition: data["condition"])
+      return [200, { 'Content-Type' => 'application/json' }, [ item.to_json ]]
+    
     end
 
     resp.finish
