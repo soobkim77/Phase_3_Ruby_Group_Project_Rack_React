@@ -13,6 +13,7 @@ class App extends React.Component {
     users: [],
     addItem: false,
     login: true,
+    createUser: true,
     currentItem: {},
     currentUser: {},
     isLoggedIn: false,
@@ -49,19 +50,50 @@ class App extends React.Component {
   }
 
   validateUser = (e) => {
-    e.stopPropagation()
+    // e.stopPropagation()
     e.preventDefault()
     let users = this.state.users
     let correctUser = users.find(user => user.username === this.state.user.username)
     if (correctUser){
       if (correctUser.password === this.state.user.password){
       this.setState({isLoggedIn: true, currentUser: correctUser, login: true})
-    }
-    else {
-      alert('Incorrect Password, Please Try Again')
-    }
+        }
+      else {
+          alert('Incorrect Password, Please Try Again')
+        }
+      }
+    else{ alert("Username not found, Please Try Again")}
   }
-  else{ alert("Username not found, Please Try Again")}
+
+  createUser = (e) => {
+    e.preventDefault()
+    let allUsers = this.state.users
+    let duplicateUser = allUsers.find(user => user.username === this.state.user.username)
+    let newUser = {
+      name: this.state.user.username,
+      password: this.state.user.password
+    }
+    let reqPackage = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newUser)}
+    if(duplicateUser){
+      alert('Username Already Exists')
+    }
+    else{
+    fetch('http://127.0.0.1:9393/users/', reqPackage)
+      .then(r => r.json())
+      .then(data => {
+        alert("User created, please log in to continue!")
+        this.setState({
+          users: [...this.state.users, data],
+          login: true,
+          createUser: true
+        })
+      })
+    }
   }
 
   componentDidMount = () => {
@@ -120,14 +152,20 @@ class App extends React.Component {
       <div>
         <Link to={`users/${this.state.currentUser.id}`}>my page</Link>
         <div>
-          <button onClick={() => {this.setState({login: false})}}>LogIn</button>
+          <button onClick={() => {this.setState({login: false, createUser: true})}}>LogIn</button>
+          <button onClick={() => {this.setState({createUser: false, login: true})}}>Create User</button>
           {this.state.login ? 
           
           null 
           
           : 
           
-          <LogIn user={this.state.user} handleUsernameChange={this.handleUsernameChange} handlePasswordChange={this.handlePasswordChange}  handleLogin={(e) => this.validateUser(e)} />} 
+          <LogIn log={this.state.login} user={this.state.user} handleUsernameChange={this.handleUsernameChange} handlePasswordChange={this.handlePasswordChange}  handleLogin={(e) => this.validateUser(e)} />} 
+          {this.state.createUser ?
+          null
+          :
+          <LogIn log={this.state.login} user={this.state.user} handleUsernameChange={this.handleUsernameChange} handlePasswordChange={this.handlePasswordChange}  handleLogin={(e) => this.createUser(e)} />
+          }
         <h1 className="ui header">Welcome to Jankazon</h1>
         </div>
         <Switch>  
