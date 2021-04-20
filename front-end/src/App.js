@@ -186,18 +186,16 @@ class App extends React.Component {
             null 
           
             : 
+         
+          <LogIn log={this.state.login} user={this.state.user} handleUsernameChange={this.handleUsernameChange} handlePasswordChange={this.handlePasswordChange}  handleLogin={(e) => this.validateUser(e)} />} 
+          {this.state.createUser ?
+          null
+          :
+          <LogIn log={this.state.login} user={this.state.user} handleUsernameChange={this.handleUsernameChange} handlePasswordChange={this.handlePasswordChange}  handleLogin={(e) => this.createUser(e)} />
+          }
+        </div>
+        <h1 className="ui header welcome">Welcome to Jankazon</h1>
           
-            <LogIn log={this.state.login} user={this.state.user} handleUsernameChange={this.handleUsernameChange} handlePasswordChange={this.handlePasswordChange}  handleLogin={(e) => this.validateUser(e)} />} 
-            {this.state.createUser ?
-            null
-            :
-            <LogIn log={this.state.login} user={this.state.user} handleUsernameChange={this.handleUsernameChange} handlePasswordChange={this.handlePasswordChange}  handleLogin={(e) => this.createUser(e)} />
-            }
-          </div>
-          )
-        }
-        
-        <h1 className="ui header">Welcome to Jankazon</h1>
         <Switch>  
             <Route exact path="/marketplace" render={()=> {
               return <MarketPlace items={this.state.items} />
