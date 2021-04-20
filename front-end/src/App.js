@@ -149,6 +149,20 @@ class App extends React.Component {
     return items
   }
 
+
+  viewItem = item => {
+    console.log(item)
+    // this.setState({
+    //   currentItem: item
+    // });
+  };
+
+  clearCurrentItem = () => {
+    this.setState({
+      currentItem: {}
+    });
+  };
+
   removeItem = (deleteItem) => {
     fetch(`http://127.0.0.1:9393/items/${deleteItem.id}`, {
       method: "DELETE",
@@ -169,7 +183,6 @@ class App extends React.Component {
       id: ""
     }})
   }
-
 
   render(){
     return (
