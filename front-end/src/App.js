@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, Switch} from 'react-router-dom'
+import {Route, Switch, Link} from 'react-router-dom'
 import "semantic-ui-css/semantic.min.css";
 import './App.css';
 import MarketPlace from './Pages/MarketPlace'
@@ -36,7 +36,6 @@ class App extends React.Component {
     fetch("http://127.0.0.1:9393/users/")
     .then(r => r.json())
     .then(data => {
-      console.log(data.users)
       this.setState({users: data.users})
     })
   }
@@ -92,6 +91,7 @@ class App extends React.Component {
 
     fetch("http://127.0.0.1:9393/items/", reqPackage)
     .then(res => res.json())
+
     .then(data => {
       this.setState({
         items: [...this.state.items, data],
@@ -108,10 +108,16 @@ class App extends React.Component {
   }
 
 
+  itemsByUser = () => {
+    let items =  this.state.items.filter(item => item.seller.id == this.state.currentUser.id)
+    return items
+  }
+
 
   render(){
     return (
       <div>
+        <Link to={`users/${this.state.currentUser.id}`}>my page</Link>
         <div>
           <button onClick={() => {this.setState({login: false})}}>LogIn</button>
           {this.state.login ? 
@@ -125,10 +131,10 @@ class App extends React.Component {
         </div>
         <Switch>  
             <Route exact path="/marketplace" render={()=> {
-              return <MarketPlace items={this.state.items}/>
+              return <MarketPlace items={this.state.items} />
             }}/>
             <Route exact path="/users/:id" render={()=> {
-              return <UserPage currentUser={this.state.user} items={this.state.items} handleClick={this.handleClick} handleSubmit={this.handleSubmit} addItem={this.state.addItem}/>
+              return <UserPage currentUser={this.state.user} handleClick={this.handleClick} handleSubmit={this.handleSubmit} addItem={this.state.addItem} items={this.itemsByUser()}/>
             }}/>
         </Switch>
       </div>

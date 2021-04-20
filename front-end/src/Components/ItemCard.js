@@ -1,6 +1,7 @@
 import { Card, Image } from "semantic-ui-react";
 
 const ItemCard = (props) => {
+  console.log(props.items)
     return (
       <Card raised>
         <Image src={props.item.imageUrl} />
@@ -12,6 +13,7 @@ const ItemCard = (props) => {
               Price: {props.item.price} <br />
               Condition: {props.item.condition} <br />
               Description: {props.item.description} <br />
+              Category: {props.item.category} <br />
           </Card.Description>
         </Card.Content>
       </Card>
