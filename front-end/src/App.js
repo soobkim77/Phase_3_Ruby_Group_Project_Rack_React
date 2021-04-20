@@ -148,10 +148,10 @@ class App extends React.Component {
   }
 
   removeItem = (deleteItem) => {
-    fetch("http://127.0.0.1:9393/items/"+deleteItem.id, {
+    fetch(`http://127.0.0.1:9393/items/${deleteItem.id}`, {
       method: "DELETE",
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       } 
     })
 
@@ -160,11 +160,19 @@ class App extends React.Component {
     })
   }
 
+  handleLogout = () => {
+    this.setState({user: {
+      username: "",
+      password: "",
+      id: ""
+    }})
+  }
+
 
   render(){
     return (
       <div>
-        <NavBar user={this.state.currentUser}/>
+        <NavBar user={this.state.currentUser} logout={this.handleLogout}/>
         
         <div>
           <button onClick={() => {this.setState({login: false, createUser: true})}}>LogIn</button>
