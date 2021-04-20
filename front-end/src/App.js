@@ -146,6 +146,19 @@ class App extends React.Component {
     return items
   }
 
+  removeItem = (deleteItem) => {
+    fetch("http://127.0.0.1:9393/items/"+deleteItem.id, {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json',
+      } 
+    })
+
+    this.setState({
+      items: this.state.items.filter(item => item !== deleteItem)
+    })
+  }
+
 
   render(){
     return (
@@ -173,7 +186,7 @@ class App extends React.Component {
               return <MarketPlace items={this.state.items} />
             }}/>
             <Route exact path="/users/:id" render={()=> {
-              return <UserPage currentUser={this.state.user} handleClick={this.handleClick} handleSubmit={this.handleSubmit} addItem={this.state.addItem} items={this.itemsByUser()}/>
+              return <UserPage remove={this.removeItem} currentUser={this.state.user} handleClick={this.handleClick} handleSubmit={this.handleSubmit} addItem={this.state.addItem} items={this.itemsByUser()}/>
             }}/>
         </Switch>
       </div>

@@ -2,19 +2,25 @@ import React from 'react';
 import ItemForm from '../Components/ItemForm';
 import ItemContainer from '../Container/ItemContainer';
 
+class UserPage extends React.Component{
 
-const UserPage = (props) => {
-    return(
-        <div>
+    state = {
+        myPage: true
+    }
+
+    render(){
+        return(
             <div>
-                { props.addItem ? <ItemForm handleSubmit={props.handleSubmit}/> : null }
-                <button onClick={props.handleClick}>Add an Item</button>
+                <div>
+                    { this.props.addItem ? <ItemForm handleSubmit={this.props.handleSubmit}/> : null }
+                    <button onClick={this.props.handleClick}>Add an Item</button>
+                </div>
+                <div>
+                    <ItemContainer myPage={this.state.myPage} remove={this.props.remove} items={this.props.items}/>
+                </div>
             </div>
-            <div>
-                <ItemContainer items={props.items}/>
-            </div>
-        </div>
-    )
+        )
+    }
 }
 
 export default UserPage
