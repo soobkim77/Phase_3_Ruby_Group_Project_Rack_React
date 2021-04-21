@@ -43,6 +43,12 @@ const ItemSpecs = props => {
             >
               Go Back
             </button>
+            <button
+              className="ui button fluid"
+              onClick={() => props.buy()}
+            >
+              Buy Item
+            </button>
           </div>
         </div>
       </div>

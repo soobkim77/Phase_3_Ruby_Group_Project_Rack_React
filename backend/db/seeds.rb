@@ -22,5 +22,7 @@ puts "Creating Items"
 50.times do
     Item.create(name: Faker::Commerce.product_name, image_url: Faker::LoremFlickr.image, seller: User.all.sample, category_id: Category.all.sample.id, description: Faker::Lorem.sentence, price: Faker::Commerce.price, condition: condition.sample)
 end
+
+
 # Seeding Purchases
 # Purchase.create(item_id: Item.all.sample.id, seller_id: Seller.all.sample.id, purchaser_id: Purchaser.all.sample.id)

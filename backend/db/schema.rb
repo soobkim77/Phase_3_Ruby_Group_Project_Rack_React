@@ -33,6 +33,8 @@ ActiveRecord::Schema.define(version: 2021_04_19_175215) do
     t.integer "seller_id"
     t.integer "purchaser_id"
     t.index ["item_id"], name: "index_purchases_on_item_id"
+    t.index ["purchaser_id"], name: "index_purchases_on_purchaser_id"
+    t.index ["seller_id"], name: "index_purchases_on_seller_id"
   end
 
   create_table "users", force: :cascade do |t|

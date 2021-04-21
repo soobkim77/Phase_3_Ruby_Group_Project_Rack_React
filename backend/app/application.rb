@@ -27,9 +27,16 @@ class Application
   
 
     elsif req.path.match(/users/) && req.post?
-      data = data = JSON.parse req.body.read
+      data = JSON.parse req.body.read
       user = User.create(name: data["name"], password: data["password"])
       return [200, { 'Content-Type' => 'application/json' }, [user.format_user.to_json ]]
+
+    elsif req.path.match(/purchases/) && req.post?
+      data = JSON.parse req.body.read
+      purchase = Purchase.create(item_id: data["item_id"], seller_id: data["seller_id"] , purchaser_id: data["purchaser_id"])
+      Item.update(data["item_id"], seller_id: data["purchaser_id"])
+      item = Item.find(data["item_id"])
+      return [200, { 'Content-Type' => 'application/json' }, [{:purchase => purchase, :item => item.format_item}.to_json ]]
   
 
     elsif req.path.match(/items/) && req.patch?      
@@ -44,7 +51,6 @@ class Application
     elsif req.delete?
       id = req.path.split("/items/").last
       Item.find(id).delete
-
       return [200, { 'Content-Type' => 'application/json' }, [ {:message => "Task deleted!"}.to_json ]]
     end
  
