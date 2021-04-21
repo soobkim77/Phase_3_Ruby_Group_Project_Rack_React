@@ -232,16 +232,19 @@ class App extends React.Component {
       username: "",
       password: "",
       id: ""
-    }})
+    },
+    isLoggedIn: false,
+    login: false
+  })
   }
 
   render(){
     return (
-      <div>
+      <div className={this.state.isLoggedIn? "": "login-background"} style={{height: "100%"}}>
         {this.state.isLoggedIn ? null : <h1 className="welcome">Welcome to Jankazon</h1>}
         <div>
           {this.state.isLoggedIn ?
-            (<NavBar user={this.state.currentUser} isLoggedIn={this.state.isLoggedIn}/>)
+            (<NavBar user={this.state.currentUser} isLoggedIn={this.state.isLoggedIn} handleLogout={this.handleLogout}/>)
             :
             (
             <div className="root-container">
