@@ -29,6 +29,7 @@ const ItemCard = (props) => {
         </Card.Content>
         <Card.Content>
           <Card.Description>
+<<<<<<< HEAD
             <strong>About this item</strong><br />
             {props.item.description}
           </Card.Description> <br />   
@@ -48,6 +49,17 @@ const ItemCard = (props) => {
             </a>
           : 
             null}
+=======
+              Price: {props.item.price} <br />
+              Condition: {props.item.condition} <br />
+              Description: {props.item.description} <br />
+              Category: {props.item.category} <br />
+          </Card.Description>
+          {props.myPage ? <button 
+                    className="userRmvBtn" 
+                    id={props.item.id} 
+                    onClick={(e)=>props.remove(e,props.item)}>x</button> : null}
+>>>>>>> soobs
         </Card.Content>
       </Card>
     )
