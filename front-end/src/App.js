@@ -14,7 +14,7 @@ class App extends React.Component {
     items: [],
     users: [],
     addItem: false,
-    login: true,
+    login: false,
     createUser: true,
     currentItem: {},
     currentUser: {},
@@ -25,7 +25,7 @@ class App extends React.Component {
       id: ""
     },
     itemView: false,
-    edit: false,
+    edit: false
   }
 
   //Backend Requests
@@ -160,6 +160,12 @@ class App extends React.Component {
     });
   };
 
+  clearCurrentItem = () => {
+    this.setState({
+      currentItem: {}
+    });
+  };
+
   goBack = () => {
     this.setState({
       currentItem: {},
@@ -232,28 +238,39 @@ class App extends React.Component {
   render(){
     return (
       <div>
-        {this.state.isLoggedIn ?
-          (<NavBar user={this.state.currentUser} isLoggedIn={this.state.isLoggedIn}/>)
-          :
-          (
-          <div>
-            <button onClick={() => {this.setState({login: false, createUser: true})}}>LogIn</button>
-            <button onClick={() => {this.setState({createUser: false, login: true})}}>Create User</button>
-            {this.state.login ? 
-          
-            null 
-          
-            : 
-         
-          <LogIn log={this.state.login} user={this.state.user} handleUsernameChange={this.handleUsernameChange} handlePasswordChange={this.handlePasswordChange}  handleLogin={(e) => this.validateUser(e)} />} 
-          {this.state.createUser ?
-          null
-          :
-          <LogIn log={this.state.login} user={this.state.user} handleUsernameChange={this.handleUsernameChange} handlePasswordChange={this.handlePasswordChange}  handleLogin={(e) => this.createUser(e)} />
-          }
+        {this.state.isLoggedIn ? null : <h1 className="welcome">Welcome to Jankazon</h1>}
+        <div>
+          {this.state.isLoggedIn ?
+            (<NavBar user={this.state.currentUser} isLoggedIn={this.state.isLoggedIn}/>)
+            :
+            (
+            <div className="root-container">
+              <div>
+                <div className="box-controller">
+                    {this.state.login?
+                    <button className="controller" onClick={() => {this.setState({login: false, createUser: true})}}>LogIn</button>
+                    :
+                    <button className="controller" onClick={() => {this.setState({createUser: false, login: true})}}>Create User</button>
+                    } 
+            </div>
+                  <div className="box-container">
+                    {this.state.login ? 
+                  
+                    null 
+                  
+                    : 
+                
+                    <LogIn log={this.state.login} user={this.state.user} handleUsernameChange={this.handleUsernameChange} handlePasswordChange={this.handlePasswordChange}  handleLogin={(e) => this.validateUser(e)} />} 
+                    {this.state.createUser ?
+                    null
+                    :
+                    <LogIn log={this.state.login} user={this.state.user} handleUsernameChange={this.handleUsernameChange} handlePasswordChange={this.handlePasswordChange}  handleLogin={(e) => this.createUser(e)} />
+                     }
+                  </div>
+              </div>            
         </div>)}
-        
-        <h1 className="ui header welcome">Welcome to Jankazon</h1>
+        </div>
+        {/* <Welcome/> */}
           
         <Switch>  
             <Route exact path="/marketplace" render={()=> {
@@ -269,3 +286,4 @@ class App extends React.Component {
 }
 
 export default withRouter(App);
+
