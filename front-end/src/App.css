@@ -202,7 +202,6 @@ body,
     background-color: #2ecc71;
 }
 
-<<<<<<< HEAD
 .navbar {
   border-bottom: 2px solid black;
   padding-bottom: 10px;
@@ -212,8 +211,7 @@ body,
 
 .icon {
   margin-bottom: 2%;
-=======
+}
 .show {
     visibility: visible;
->>>>>>> soobs
 }
