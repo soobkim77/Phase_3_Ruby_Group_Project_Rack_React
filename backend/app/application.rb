@@ -13,7 +13,7 @@ class Application
 
     elsif req.path.match(/users/) && req.get?
       users = User.all.map do |u|
-        {id: u.id, username: u.name, password: u.password}
+        {id: u.id, username: u.name}
       end
       return [200, { 'Content-Type' => 'application/json' }, [ {:users => users}.to_json ]]
 
@@ -28,10 +28,13 @@ class Application
 
     elsif req.path.match(/users/) && req.post?
       data = JSON.parse req.body.read
-      user = User.create(name: data["name"], password: data["password"])
-      return [200, { 'Content-Type' => 'application/json' }, [user.format_user.to_json ]]
-
-    elsif req.path.match(/purchases/) && req.post?
+      if !User.find_by(name: data["name"])
+        user = User.create(name: data["name"], password: BCrypt::Password.create(data["password"]))
+        return [200, { 'Content-Type' => 'application/json' }, [user.format_user.to_json ]]
+      else 
+        return [400, { 'Content-Type' => 'application/json' }, [{:message => "Username Already Taken"}.to_json ]]
+      end
+      elsif req.path.match(/purchases/) && req.post?
       data = JSON.parse req.body.read
       purchase = Purchase.create(item_id: data["item_id"], seller_id: data["seller_id"] , purchaser_id: data["purchaser_id"])
       Item.update(data["item_id"], seller_id: data["purchaser_id"])
@@ -46,6 +49,15 @@ class Application
       Item.update(id, name:data["name"], image_url: data["image"], seller_id: data["seller"]["id"], category_id: category.id, description: data["description"], price: data["price"], condition: data["condition"])
       item = Item.find(id)
       return [200, { 'Content-Type' => 'application/json' }, [item.format_item.to_json ]]
+
+    elsif req.path.match(/login/) && req.patch? 
+      data = JSON.parse req.body.read
+      user = User.find_by(name: data["name"])
+      if (BCrypt::Password.new(user.password) == data["password"])
+        return [200, { 'Content-Type' => 'application/json' }, [ {:message => "Successful Login", :user => user.format_user}.to_json ]]
+      else
+        return [400, { 'Content-Type' => 'application/json' }, [ {:message => "Incorrect username or password"}.to_json ]]
+      end
 
 
     elsif req.delete?

@@ -21,8 +21,7 @@ class App extends React.Component {
     isLoggedIn: false,
     user: {
       username: "",
-      password: "",
-      id: ""
+      password: ""
     },
     itemView: false,
     edit: false
@@ -56,18 +55,38 @@ class App extends React.Component {
   validateUser = (e) => {
     // e.stopPropagation()
     e.preventDefault()
-    let users = this.state.users
-    let correctUser = users.find(user => user.username === this.state.user.username)
-    if (correctUser){
-      if (correctUser.password === this.state.user.password){
-      this.setState({isLoggedIn: true, currentUser: correctUser, login: true})
-      this.props.history.push('/marketplace')
-        }
-      else {
-          alert('Incorrect Password, Please Try Again')
-        }
+    // let users = this.state.users
+    // let correctUser = users.find(user => user.username === this.state.user.username)
+    // if (correctUser){
+    //   if (correctUser.password === this.state.user.password){
+    //   this.setState({isLoggedIn: true, currentUser: correctUser, login: true})
+    //   this.props.history.push('/marketplace')
+    //     }
+    //   else {
+    //       alert('Incorrect Password, Please Try Again')
+    //     }
+    //   }
+    // else{ alert("Username not found, Please Try Again")}
+    let user = {
+      name: this.state.user.username,
+      password: this.state.user.password
+    }
+    let reqPackage = {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)}
+    fetch("http://127.0.0.1:9393/login/", reqPackage)
+    .then(r => r.json())
+    .then(data => {
+      if (data.message == "Successful Login"){
+        this.setState({isLoggedIn: true, currentUser: data.user, login: true, user: {username: "", password: ""}})
+        this.props.history.push('/marketplace')
+      } else {
+        alert(data.message)
       }
-    else{ alert("Username not found, Please Try Again")}
+    })
   }
 
   createUser = (e) => {
@@ -91,12 +110,16 @@ class App extends React.Component {
     fetch('http://127.0.0.1:9393/users/', reqPackage)
       .then(r => r.json())
       .then(data => {
+        if(!data.message){
         alert("User created, please log in to continue!")
         this.setState({
           users: [...this.state.users, data],
-          login: true,
+          login: false,
           createUser: true
         })
+      } else {
+        alert(data.message)
+      }
       })
     }
   }
@@ -228,11 +251,8 @@ class App extends React.Component {
   }
 
   handleLogout = () => {
-    this.setState({user: {
-      username: "",
-      password: "",
-      id: ""
-    },
+    this.setState({
+    currentUser: {},
     isLoggedIn: false,
     login: false
   })
