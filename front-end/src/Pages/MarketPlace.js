@@ -49,11 +49,11 @@ class MarketPlace extends React.Component {
 
   render() {
     return (
-      <Grid columns={2} divided stackable>
-        <Grid.Column width="4">
+      <Grid columns={2} divided stackable >
+        <Grid.Column width="3" >
           <FilterBar handleCategoryDropDown={this.handleCategoryDropDown} handleUserFilter={this.handleUserFilter}/>
         </Grid.Column>
-        <Grid.Column width="12" as="div">
+        <Grid.Column width="12">
           <ItemContainer items={this.filterItems()}/>
         </Grid.Column>
       </Grid>
