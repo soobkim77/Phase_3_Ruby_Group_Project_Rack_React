@@ -13,11 +13,8 @@ const ItemSpecs = props => {
             />
           </div>
           <div className="four wide column">
-            <h2>Name: {props.item.name}</h2>
+            <h2>{props.item.name}</h2>
             <p>
-              <strong>Description: </strong>
-              {props.item.description}
-            </p>
             <strong>
               Price: {props.item.price}
             </strong>
@@ -26,16 +23,20 @@ const ItemSpecs = props => {
               Condition: {props.item.condition}
             </strong>
             <br />
+            <strong>Description: </strong>
+            {props.item.description}
+            <br />
             <strong>
               Category: {props.item.category}
             </strong>
-            <br />
+            </p>
             <button
               className="ui button fluid"
-              onClick={() => console.log("Edit Item")}
+              onClick={() => props.editItem()}
             >
               Edit Item
             </button>
+            <br />
             <button
               className="ui button fluid"
               onClick={() => props.goBack()}
