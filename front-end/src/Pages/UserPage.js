@@ -2,15 +2,24 @@ import React from 'react';
 import ItemForm from '../Components/ItemForm';
 import ItemContainer from '../Container/ItemContainer';
 import ItemSpecs from '../Components/ItemSpecs';
+import EditItem from "../Components/EditItem";
+
 
 class UserPage extends React.Component{
 
     state = {
         myPage: true,
-        view: true
     }
 
-
+    renderContent = () => {
+        if (this.props.edit !== false) {
+            return <EditItem item={this.props.item} cancelEdit={this.props.cancelEdit} handleSaveEdit={this.props.handleSaveEdit}/>;
+        } else if (this.props.itemView !== false) {
+            return <ItemSpecs item={this.props.item} goBack={this.props.goBack} editItem={this.props.editItem} />; 
+        } else {
+            return <ItemContainer myPage={this.state.myPage} remove={this.props.remove} items={this.props.items} view={this.props.view} />;
+        }
+    }
 
     render(){
         return(
@@ -20,7 +29,7 @@ class UserPage extends React.Component{
                     <button onClick={this.props.handleClick}>Add an Item</button>
                 </div>
                 <div>
-                    {this.props.itemView ? <ItemSpecs item={this.props.item} goBack={null}/> : <ItemContainer myPage={this.state.myPage} remove={this.props.remove} items={this.props.items} view={this.props.view} myView={this.state.view}/>}
+                    {this.renderContent()}
                 </div>
             </div>
         )
