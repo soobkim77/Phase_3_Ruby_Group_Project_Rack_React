@@ -48,6 +48,9 @@ class MarketPlace extends React.Component {
   }
 
   render() {
+    if (!this.props.isLoggedIn)  
+    return null
+    else 
     return (
       <Grid columns={2} divided stackable >
         <Grid.Column width="3" >

@@ -40,9 +40,9 @@ class FilterBar extends React.Component {
     return (
       <div>
           <h1>Filters</h1>
-          <div class="ui icon input">
+          <div className="ui icon input">
             <input onInput={this.handleChange} type="text" placeholder="Search..."/>
-            <i aria-hidden="true" class="search circular link icon" onClick={() => this.props.handleUserFilter(this.state.input)}></i>
+            <i aria-hidden="true" className="search circular link icon" onClick={() => this.props.handleUserFilter(this.state.input)}></i>
           </div>
           <div>
             <Dropdown onChange={this.props.handleCategoryDropDown} placeholder='Select a Category' search selection options={categoryOptions} />  
