@@ -32,12 +32,21 @@ class Application
       return [200, { 'Content-Type' => 'application/json' }, [user.format_user.to_json ]]
   
 
-  elsif req.delete?
-    id = req.path.split("/items/").last
-    Item.find(id).delete
+    elsif req.path.match(/items/) && req.patch?      
+      data = JSON.parse req.body.read
+      id = req.path.split("/items/").last
+      category = Category.find_by(name: data["category"])
+      Item.update(id, name:data["name"], image_url: data["image"], seller_id: data["seller"]["id"], category_id: category.id, description: data["description"], price: data["price"], condition: data["condition"])
+      item = Item.find(id)
+      return [200, { 'Content-Type' => 'application/json' }, [item.format_item.to_json ]]
 
-    return [200, { 'Content-Type' => 'application/json' }, [ {:message => "Task deleted!"}.to_json ]]
-  end
+
+    elsif req.delete?
+      id = req.path.split("/items/").last
+      Item.find(id).delete
+
+      return [200, { 'Content-Type' => 'application/json' }, [ {:message => "Task deleted!"}.to_json ]]
+    end
  
 
 

@@ -14,7 +14,7 @@ class App extends React.Component {
     items: [],
     users: [],
     addItem: false,
-    login: true,
+    login: false,
     createUser: true,
     currentItem: {},
     currentUser: {},
@@ -24,7 +24,8 @@ class App extends React.Component {
       password: "",
       id: ""
     },
-    itemView: false
+    itemView: false,
+    edit: false
   }
 
   //Backend Requests
@@ -165,7 +166,55 @@ class App extends React.Component {
     });
   };
 
-  removeItem = (deleteItem) => {
+  goBack = () => {
+    this.setState({
+      currentItem: {},
+      itemView:false
+    });
+  };
+
+  editItem = () => {
+    this.setState({edit: true})
+  }
+
+  cancelEdit = () => {
+    this.setState({edit: false});
+  }
+
+  handleSaveEdit = (e, item) => {
+    e.preventDefault();
+  
+    const updateItem = {
+      name: e.target.name.value,
+      image: e.target.image.value,
+      seller: this.state.currentItem.seller,
+      category: e.target.category.value,
+      description: e.target.description.value,
+      price: e.target.price.value,
+      condition: e.target.condition.value
+    };
+
+    fetch(`http://127.0.0.1:9393/items/${item.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(updateItem),
+    })
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          items: this.state.items.map(item => item.id !== data.id ? item : data ),
+          currentItem: data,
+          edit: false,
+          itemView:true
+        });
+      });
+  }
+
+  removeItem = (e, deleteItem) => {
+    e.stopPropagation()
     fetch(`http://127.0.0.1:9393/items/${deleteItem.id}`, {
       method: "DELETE",
       headers: {
@@ -189,35 +238,46 @@ class App extends React.Component {
   render(){
     return (
       <div>
-        {this.state.isLoggedIn ?
-          (<NavBar user={this.state.currentUser} isLoggedIn={this.state.isLoggedIn}/>)
-          :
-          (
-          <div>
-            <button onClick={() => {this.setState({login: false, createUser: true})}}>LogIn</button>
-            <button onClick={() => {this.setState({createUser: false, login: true})}}>Create User</button>
-            {this.state.login ? 
-          
-            null 
-          
-            : 
-         
-          <LogIn log={this.state.login} user={this.state.user} handleUsernameChange={this.handleUsernameChange} handlePasswordChange={this.handlePasswordChange}  handleLogin={(e) => this.validateUser(e)} />} 
-          {this.state.createUser ?
-          null
-          :
-          <LogIn log={this.state.login} user={this.state.user} handleUsernameChange={this.handleUsernameChange} handlePasswordChange={this.handlePasswordChange}  handleLogin={(e) => this.createUser(e)} />
-          }
+        {this.state.isLoggedIn ? null : <h1 className="welcome">Welcome to Jankazon</h1>}
+        <div>
+          {this.state.isLoggedIn ?
+            (<NavBar user={this.state.currentUser} isLoggedIn={this.state.isLoggedIn}/>)
+            :
+            (
+            <div className="root-container">
+              <div>
+                <div className="box-controller">
+                    {this.state.login?
+                    <button className="controller" onClick={() => {this.setState({login: false, createUser: true})}}>LogIn</button>
+                    :
+                    <button className="controller" onClick={() => {this.setState({createUser: false, login: true})}}>Create User</button>
+                    } 
+            </div>
+                  <div className="box-container">
+                    {this.state.login ? 
+                  
+                    null 
+                  
+                    : 
+                
+                    <LogIn log={this.state.login} user={this.state.user} handleUsernameChange={this.handleUsernameChange} handlePasswordChange={this.handlePasswordChange}  handleLogin={(e) => this.validateUser(e)} />} 
+                    {this.state.createUser ?
+                    null
+                    :
+                    <LogIn log={this.state.login} user={this.state.user} handleUsernameChange={this.handleUsernameChange} handlePasswordChange={this.handlePasswordChange}  handleLogin={(e) => this.createUser(e)} />
+                     }
+                  </div>
+              </div>            
         </div>)}
-        
-        <h1 className="ui header welcome">Welcome to Jankazon</h1>
+        </div>
+        {/* <Welcome/> */}
           
         <Switch>  
             <Route exact path="/marketplace" render={()=> {
               return <MarketPlace items={this.state.items} />
             }}/>
             <Route exact path="/users/:id" render={()=> {
-              return <UserPage itemView={this.state.itemView} item={this.state.currentItem} remove={this.removeItem} currentUser={this.state.user} handleClick={this.handleClick} handleSubmit={this.handleSubmit} addItem={this.state.addItem} view={this.viewItem} items={this.itemsByUser()}/>
+              return <UserPage itemView={this.state.itemView} item={this.state.currentItem} remove={this.removeItem} currentUser={this.state.user} handleClick={this.handleClick} handleSubmit={this.handleSubmit} addItem={this.state.addItem} view={this.viewItem} items={this.itemsByUser()} goBack={this.goBack} editItem={this.editItem} cancelEdit={this.cancelEdit} edit={this.state.edit} handleSaveEdit={this.handleSaveEdit}/>
             }}/>
         </Switch>
       </div>
@@ -226,3 +286,4 @@ class App extends React.Component {
 }
 
 export default withRouter(App);
+
