@@ -16,11 +16,15 @@ body,
     width: 100%;
     height: 100%;
     box-sizing: border-box;
-    background-image: url(./voguecollage.jpg);
+    
     background-size: 60%;
     background-origin: border-box;
     margin: 0px;
     background-attachment: fixed;
+}
+
+.login-background {
+  background-image: url(./voguecollage.jpg);
 }
 
 

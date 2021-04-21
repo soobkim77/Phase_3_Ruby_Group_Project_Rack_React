@@ -11,7 +11,7 @@ const NavBar = (props) => {
             <NavLink style={{ marginRight: "10px" }} to="/marketplace">
                 Marketplace
             </NavLink>
-            <button onClick={props.logout} className="logout">LogOut</button>
+            <button onClick={props.handleLogout} className="logout">LogOut</button>
         </div>
         )
 
