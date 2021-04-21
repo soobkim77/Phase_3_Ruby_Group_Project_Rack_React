@@ -238,6 +238,28 @@ class App extends React.Component {
   })
   }
 
+  buyItem = (e, item) => {
+    e.stopPropagation()
+    let purchase = {
+      item_id: item.id,
+      seller_id: item.seller.id,
+      purchaser_id: this.state.currentUser.id
+    }
+
+    let reqPackage = {
+      headers: {"Content-Type":"application/json"},
+      method: "POST",
+      body: JSON.stringify(purchase)
+    }
+    fetch(`http://127.0.0.1:9393/purchases`, reqPackage)
+    .then(r => r.json())
+    .then(purch =>  {this.setState({
+      items: this.state.items.map(item => item.id !== purch.item.id ? item : purch.item )})
+      this.props.history.push(`/users/${this.state.currentUser.id}`)
+    }
+    )
+  }
+
   render(){
     return (
       <div className={this.state.isLoggedIn? "": "login-background"} style={{height: "100%"}}>
@@ -277,7 +299,7 @@ class App extends React.Component {
           
         <Switch>  
             <Route exact path="/marketplace" render={()=> {
-              return <MarketPlace isLoggedIn={this.state.isLoggedIn} items={this.state.items} />
+              return <MarketPlace isLoggedIn={this.state.isLoggedIn} items={this.state.items} buy={this.buyItem} currentUser={this.state.currentUser}/>
             }}/>
             <Route exact path="/users/:id" render={()=> {
               return <UserPage itemView={this.state.itemView} item={this.state.currentItem} remove={this.removeItem} currentUser={this.state.user} handleClick={this.handleClick} handleSubmit={this.handleSubmit} addItem={this.state.addItem} view={this.viewItem} items={this.itemsByUser()} goBack={this.goBack} editItem={this.editItem} cancelEdit={this.cancelEdit} edit={this.state.edit} handleSaveEdit={this.handleSaveEdit}/>

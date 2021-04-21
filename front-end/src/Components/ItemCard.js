@@ -17,7 +17,10 @@ const ItemCard = (props) => {
           {props.myPage ? <button 
                     className="userRmvBtn" 
                     id={props.item.id} 
-                    onClick={()=>props.remove(props.item)}>x</button> : null}
+                    onClick={()=>props.remove(props.item)}>x</button> :
+                    <button 
+                    id={props.item.id} 
+                    onClick={(e)=>props.buy(e, props.item)}>Buy Item</button>}
         </Card.Content>
       </Card>
      
