@@ -53,20 +53,7 @@ class App extends React.Component {
   }
 
   validateUser = (e) => {
-    // e.stopPropagation()
     e.preventDefault()
-    // let users = this.state.users
-    // let correctUser = users.find(user => user.username === this.state.user.username)
-    // if (correctUser){
-    //   if (correctUser.password === this.state.user.password){
-    //   this.setState({isLoggedIn: true, currentUser: correctUser, login: true})
-    //   this.props.history.push('/marketplace')
-    //     }
-    //   else {
-    //       alert('Incorrect Password, Please Try Again')
-    //     }
-    //   }
-    // else{ alert("Username not found, Please Try Again")}
     let user = {
       name: this.state.user.username,
       password: this.state.user.password
@@ -327,7 +314,7 @@ class App extends React.Component {
               return <MarketPlace goBack={this.goBack} itemView={this.state.itemView} view={this.viewItem} isLoggedIn={this.state.isLoggedIn} items={this.state.items} buy={this.buyItem} currentUser={this.state.currentUser} item={this.state.currentItem}/>
             }}/>
             <Route exact path="/users/:id" render={()=> {
-              return <UserPage itemView={this.state.itemView} item={this.state.currentItem} remove={this.removeItem} currentUser={this.state.user} handleClick={this.handleClick} handleSubmit={this.handleSubmit} addItem={this.state.addItem} view={this.viewItem} items={this.itemsByUser()} goBack={this.goBack} editItem={this.editItem} cancelEdit={this.cancelEdit} edit={this.state.edit} handleSaveEdit={this.handleSaveEdit} cancelCreate={this.cancelCreate}/>
+              return <UserPage myPage={this.state.myPage} itemView={this.state.itemView} item={this.state.currentItem} remove={this.removeItem} currentUser={this.state.user} handleClick={this.handleClick} handleSubmit={this.handleSubmit} addItem={this.state.addItem} view={this.viewItem} items={this.itemsByUser()} goBack={this.goBack} editItem={this.editItem} cancelEdit={this.cancelEdit} edit={this.state.edit} handleSaveEdit={this.handleSaveEdit} cancelCreate={this.cancelCreate}/>
             }}/>
         </Switch>
       </div>

@@ -1,14 +1,34 @@
- .welcome {
-  text-align: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 999;
-  width: 100%;
-  height: max-content;
-  background-color: white;
-  font-size: 48px;
+.header-logo {
+    color: black
 }
+
+.addBtn {
+    margin-bottom: 20px;
+    display:inline-block;
+    padding:0.5em 3em;
+    border:0.16em solid #FFFFFF;
+    margin-left: 20px;
+    box-sizing: border-box;
+    text-transform:uppercase;
+    font-family:'Roboto',sans-serif;
+    font-weight: bold;
+    color: white;
+    text-align:center;
+    background-image: linear-gradient(to right, red,orange,green,blue,indigo,violet);
+    margin-top: 25px;
+}
+
+.welcome {
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    width: 100%;
+    height: max-content;
+    background-color: white;
+    font-size: 48px;
+  }
 
 html,
 body,
@@ -224,3 +244,15 @@ body,
 .three {
   margin-left: 2%
 }
+
+.card-image {
+    width: 325px;
+    height: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card-size {
+    height: 625px;
+}
+

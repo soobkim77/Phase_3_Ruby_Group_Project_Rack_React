@@ -7,7 +7,7 @@ Category.destroy_all
 # Seeding Users
 puts "Creating Users"
 5.times do
-    User.create(name: Faker::Name.name, password: BCrypt::Password.create("password"))
+    User.create(name: Faker::Name.first_name, password: BCrypt::Password.create("password"))
 end
 
 # Seeding Categories
