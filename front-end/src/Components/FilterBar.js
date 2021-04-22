@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dropdown } from 'semantic-ui-react'
+import { Dropdown, Button } from 'semantic-ui-react'
 
 const categoryOptions = [
   {
@@ -41,8 +41,8 @@ class FilterBar extends React.Component {
       <div>
           <h1>Filters</h1>
           <div className="ui icon input">
-            <input onInput={this.handleChange} type="text" placeholder="Search..."/>
-            <i aria-hidden="true" className="search circular link icon" onClick={() => this.props.handleUserFilter(this.state.input)}></i>
+            <input onInput={this.props.handleUserFilter} type="text" placeholder="Search..."/>
+            <i aria-hidden="true" className="search circular icon"></i>
           </div>
           <div>
             <Dropdown onChange={this.props.handleCategoryDropDown} placeholder='Select a Category' search selection options={categoryOptions} />  

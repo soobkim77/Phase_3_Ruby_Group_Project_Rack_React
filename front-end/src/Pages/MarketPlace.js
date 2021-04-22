@@ -33,9 +33,9 @@ class MarketPlace extends React.Component {
     })
   }
 
-  handleUserFilter = (userFilter) => {
+  handleUserFilter = (e) => {
     this.setState({
-      userFilterOption: userFilter
+      userFilterOption: e.target.value
     })
   }
 
