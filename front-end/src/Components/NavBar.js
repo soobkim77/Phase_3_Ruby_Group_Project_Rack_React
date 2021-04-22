@@ -1,21 +1,25 @@
+import React from "react";
 import { NavLink } from "react-router-dom";
+import { Menu } from "semantic-ui-react";
 
+class NavBar extends React.Component {
+  state = { activeItem: 'marketplace'}
 
-const NavBar = (props) => {
+  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+
+  render() {
+    const {activeItem} = this.state
+
+    return (
+      <Menu secondary>
+        <Menu.Item as={NavLink} active={activeItem === 'my page'} name="My Page" to={`/users/${this.props.user.id}`} onClick={this.handleItemClick}/>
+        <Menu.Item as={NavLink} active={activeItem === 'market place'} name="Market Place" to={`/marketplace`} onClick={this.handleItemClick}/>
+        <Menu.Menu position='right'>
+          <Menu.Item name='logout'active={activeItem === 'logout'} onClick={this.props.handleLogout}/>
+        </Menu.Menu>
+      </Menu>
+    )
+  }
+}
   
-      return (
-        <div style={{ borderBottom: "2px solid black", paddingBottom: "10px", marginBottom: "12px" }} className="navbar">
-            <NavLink style={{ marginRight: "10px" }} to={`/users/${props.user.id}`}>
-                My Page
-            </NavLink>
-            <NavLink style={{ marginRight: "10px" }} to="/marketplace">
-                Marketplace
-            </NavLink>
-            <button onClick={props.handleLogout} className="logout">LogOut</button>
-        </div>
-        )
-
-    }
-
-
 export default NavBar
