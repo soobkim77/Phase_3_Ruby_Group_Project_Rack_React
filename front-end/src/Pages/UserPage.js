@@ -25,7 +25,7 @@ class UserPage extends React.Component{
         return(
             <div>
                 <div>
-                    { this.props.addItem ? <ItemForm handleSubmit={this.props.handleSubmit}/> : null }
+                    { this.props.addItem ? <ItemForm handleSubmit={this.props.handleSubmit} cancelCreate={this.props.cancelCreate}/> : null }
                     {this.props.edit == false && this.props.itemView == false ? <button onClick={this.props.handleClick}>Add an Item</button> : null}
                 </div>
                 <div>

@@ -136,7 +136,7 @@ class App extends React.Component {
     let newItem = {
       name: e.target.name.value,
       image: e.target.image.value,
-      seller: e.target.seller.value,
+      seller: this.state.currentUser,
       category: e.target.category.value,
       description: e.target.description.value,
       price: e.target.price.value,
@@ -153,11 +153,16 @@ class App extends React.Component {
     .then(res => res.json())
 
     .then(data => {
-      console.log(data)
       this.setState({
         items: [...this.state.items, data],
         addItem: !this.state.addItem
       })
+    })
+  }
+
+  cancelCreate = () => {
+    this.setState({
+      addItem: !this.state.addItem
     })
   }
 
@@ -322,7 +327,7 @@ class App extends React.Component {
               return <MarketPlace isLoggedIn={this.state.isLoggedIn} items={this.state.items} buy={this.buyItem} currentUser={this.state.currentUser}/>
             }}/>
             <Route exact path="/users/:id" render={()=> {
-              return <UserPage itemView={this.state.itemView} item={this.state.currentItem} remove={this.removeItem} currentUser={this.state.user} handleClick={this.handleClick} handleSubmit={this.handleSubmit} addItem={this.state.addItem} view={this.viewItem} items={this.itemsByUser()} goBack={this.goBack} editItem={this.editItem} cancelEdit={this.cancelEdit} edit={this.state.edit} handleSaveEdit={this.handleSaveEdit}/>
+              return <UserPage itemView={this.state.itemView} item={this.state.currentItem} remove={this.removeItem} currentUser={this.state.user} handleClick={this.handleClick} handleSubmit={this.handleSubmit} addItem={this.state.addItem} view={this.viewItem} items={this.itemsByUser()} goBack={this.goBack} editItem={this.editItem} cancelEdit={this.cancelEdit} edit={this.state.edit} handleSaveEdit={this.handleSaveEdit} cancelCreate={this.cancelCreate}/>
             }}/>
         </Switch>
       </div>
