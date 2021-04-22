@@ -72,7 +72,7 @@ class App extends React.Component {
       password: this.state.user.password
     }
     let reqPackage = {
-      method: 'PATCH',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
