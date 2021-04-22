@@ -15,39 +15,41 @@ const ItemSpecs = props => {
           <div className="four wide column">
             <h2>{props.item.name}</h2>
             <p>
-            <strong>
-              Price: {props.item.price}
-            </strong>
-            <br />
-            <strong>
-              Condition: {props.item.condition}
-            </strong>
-            <br />
-            <strong>Description: </strong>
-            {props.item.description}
-            <br />
-            <strong>
-              Category: {props.item.category}
-            </strong>
+              <strong>
+                Price: {props.item.price}
+              </strong>
+              <br />
+              <strong>
+                Condition: {props.item.condition}
+              </strong>
+              <br />
+              <strong>Description: </strong>
+              {props.item.description}
+              <br />
+              <strong>
+                Category: {props.item.category}
+              </strong>
             </p>
+            {props.myPage ?
             <button
               className="ui button fluid"
               onClick={() => props.editItem()}
             >
               Edit Item
             </button>
+            :
+            <button
+              className="ui button fluid"
+              onClick={(e) => props.buy(e, props.item)}
+            >
+              Buy Item
+            </button>}
             <br />
             <button
               className="ui button fluid"
               onClick={() => props.goBack()}
             >
               Go Back
-            </button>
-            <button
-              className="ui button fluid"
-              onClick={() => props.buy()}
-            >
-              Buy Item
             </button>
           </div>
         </div>

@@ -274,7 +274,7 @@ class App extends React.Component {
     fetch(`http://127.0.0.1:9393/purchases`, reqPackage)
     .then(r => r.json())
     .then(purch =>  {this.setState({
-      items: this.state.items.map(item => item.id !== purch.item.id ? item : purch.item )})
+      items: this.state.items.map(item => item.id !== purch.item.id ? item : purch.item ), itemView: false})
       this.props.history.push(`/users/${this.state.currentUser.id}`)
     }
     )
@@ -319,7 +319,7 @@ class App extends React.Component {
           
         <Switch>  
             <Route exact path="/marketplace" render={()=> {
-              return <MarketPlace isLoggedIn={this.state.isLoggedIn} items={this.state.items} buy={this.buyItem} currentUser={this.state.currentUser}/>
+              return <MarketPlace goBack={this.goBack} itemView={this.state.itemView} view={this.viewItem} isLoggedIn={this.state.isLoggedIn} items={this.state.items} buy={this.buyItem} currentUser={this.state.currentUser} item={this.state.currentItem}/>
             }}/>
             <Route exact path="/users/:id" render={()=> {
               return <UserPage itemView={this.state.itemView} item={this.state.currentItem} remove={this.removeItem} currentUser={this.state.user} handleClick={this.handleClick} handleSubmit={this.handleSubmit} addItem={this.state.addItem} view={this.viewItem} items={this.itemsByUser()} goBack={this.goBack} editItem={this.editItem} cancelEdit={this.cancelEdit} edit={this.state.edit} handleSaveEdit={this.handleSaveEdit}/>
