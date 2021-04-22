@@ -15,7 +15,7 @@ class UserPage extends React.Component{
         if (this.props.edit !== false) {
             return <EditItem item={this.props.item} cancelEdit={this.props.cancelEdit} handleSaveEdit={this.props.handleSaveEdit}/>;
         } else if (this.props.itemView !== false) {
-            return <ItemSpecs item={this.props.item} goBack={this.props.goBack} editItem={this.props.editItem} />; 
+            return <ItemSpecs item={this.props.item} goBack={this.props.goBack} editItem={this.props.editItem} myPage={this.state.myPage}/>; 
         } else {
             return <ItemContainer myPage={this.state.myPage} remove={this.props.remove} items={this.props.items} view={this.props.view} />;
         }
@@ -26,7 +26,7 @@ class UserPage extends React.Component{
             <div>
                 <div>
                     { this.props.addItem ? <ItemForm handleSubmit={this.props.handleSubmit} cancelCreate={this.props.cancelCreate}/> : null }
-                    {this.props.edit == false && this.props.itemView == false ? <button onClick={this.props.handleClick}>Add an Item</button> : null}
+                    {this.props.edit == false && this.props.itemView == false ? <button onClick={this.props.handleClick} className="addBtn"> + Add an Item</button> : null}
                 </div>
                 <div>
                     {this.renderContent()}
