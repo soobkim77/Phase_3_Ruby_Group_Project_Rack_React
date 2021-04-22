@@ -216,6 +216,11 @@ body,
 .icon {
   margin-bottom: 2%;
 }
+
 .show {
     visibility: visible;
+}
+
+.three {
+  margin-left: 2%
 }
