@@ -2,6 +2,7 @@ import React from 'react';
 import ItemContainer from '../Container/ItemContainer'
 import FilterBar from '../Components/FilterBar'
 import { Grid } from "semantic-ui-react";
+import ItemSpecs from '../Components/ItemSpecs'
 
 class MarketPlace extends React.Component {
 
@@ -9,6 +10,16 @@ class MarketPlace extends React.Component {
     categoryFilterOption: 'all',
     userFilterOption: ''
   }
+
+
+//   renderContent = () => {
+//    if (this.props.itemView !== false) {
+//         return <ItemSpecs item={this.props.item} goBack={this.props.goBack} editItem={this.props.editItem} />; 
+//     } else {
+//         return <ItemContainer myPage={this.state.myPage} remove={this.props.remove} items={this.props.items} view={this.props.view} />;
+//     }
+// }
+
 
   handleCategoryDropDown = (event, data) => {
     this.setState({
@@ -39,29 +50,33 @@ class MarketPlace extends React.Component {
     
       /* Category = All & User search is not blank */
     } else if (this.state.categoryFilterOption === 'all' && this.state.userFilterOption){
-      return this.props.items.filter(item => item.seller.name.includes(this.state.userFilterOption))
+      return this.props.items.filter(item => item.name.toLowerCase().includes(this.state.userFilterOption.toLowerCase()))
     
       /* Category is not blank & User search is not blank */
     } else {
-      return this.props.items.filter(item => item.category === this.state.categoryFilterOption && item.seller.name.includes(this.state.userFilterOption))
+      return this.props.items.filter(item => item.category === this.state.categoryFilterOption && item.name.toLowerCase().includes(this.state.userFilterOption.toLowerCase()))
     }
   }
 
   render() {
-    if (!this.props.isLoggedIn)  
-    return null
-    else 
-    return (
-      <Grid columns={2} divided stackable >
-        <Grid.Column width="3" >
-          <FilterBar handleCategoryDropDown={this.handleCategoryDropDown} handleUserFilter={this.handleUserFilter} currentUser={this.props.currentUser} />
-        </Grid.Column>
-        <Grid.Column width="12">
-          <ItemContainer items={this.filterItems()} buy={this.props.buy}/>
-        </Grid.Column>
-      </Grid>
+    return(
+      <div>
+        {!this.props.isLoggedIn ? 
+        null 
+        :
+        <Grid columns={2} divided stackable >
+          <Grid.Column width="3" >
+            <FilterBar handleCategoryDropDown={this.handleCategoryDropDown} handleUserFilter={this.handleUserFilter} currentUser={this.props.currentUser} />
+          </Grid.Column>
+          <Grid.Column width="12">
+            {!this.props.itemView ? <ItemContainer items={this.filterItems()} view={this.props.view} item={this.props.item} /> : <ItemSpecs item={this.props.item} goBack={this.props.goBack} buy={this.props.buy} />}
+          </Grid.Column>
+        </Grid> 
+         
+        }
+      </div>
     )
+    }
   }
-}
 
 export default MarketPlace 

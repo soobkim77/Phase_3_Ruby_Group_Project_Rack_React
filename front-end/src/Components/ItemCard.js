@@ -1,12 +1,12 @@
-import { Card, Image, Icon } from "semantic-ui-react";
+import { Card, Image, Icon, Button } from "semantic-ui-react";
 
 const ItemCard = (props) => {
     return (
       <Card raised onClick={(e) => props.view(e, props.item)}>
-        <Image src={props.item.imageUrl} />
+        <Image src={props.item.imageUrl} />   
         <Card.Content>
           <Card.Header>
-              {props.item.name}
+          {props.item.name}
           </Card.Header>
           <Card.Description>
               Price: {props.item.price} <br />
@@ -17,13 +17,10 @@ const ItemCard = (props) => {
           {props.myPage ? <button 
                     className="userRmvBtn" 
                     id={props.item.id} 
-                    onClick={()=>props.remove(props.item)}>x</button> :
-                    <button 
-                    id={props.item.id} 
-                    onClick={(e)=>props.buy(e, props.item)}>Buy Item</button>}
+                    onClick={(e)=>props.remove(e, props.item)}>x</button> :
+                    null}
         </Card.Content>
       </Card>
-     
     )
 }
 

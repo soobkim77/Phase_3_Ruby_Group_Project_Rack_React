@@ -49,7 +49,7 @@ class Application
       item = Item.find(id)
       return [200, { 'Content-Type' => 'application/json' }, [item.format_item.to_json ]]
 
-    elsif req.path.match(/login/) && req.patch? 
+    elsif req.path.match(/login/) && req.post? 
       data = JSON.parse req.body.read
       user = User.find_by(name: data["name"])
       if (BCrypt::Password.new(user.password) == data["password"])
