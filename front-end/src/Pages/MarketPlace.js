@@ -39,11 +39,11 @@ class MarketPlace extends React.Component {
     
       /* Category = All & User search is not blank */
     } else if (this.state.categoryFilterOption === 'all' && this.state.userFilterOption){
-      return this.props.items.filter(item => item.seller.name.includes(this.state.userFilterOption))
+      return this.props.items.filter(item => item.name.toLowerCase().includes(this.state.userFilterOption.toLowerCase()))
     
       /* Category is not blank & User search is not blank */
     } else {
-      return this.props.items.filter(item => item.category === this.state.categoryFilterOption && item.seller.name.includes(this.state.userFilterOption))
+      return this.props.items.filter(item => item.category === this.state.categoryFilterOption && item.name.toLowerCase().includes(this.state.userFilterOption.toLowerCase()))
     }
   }
 
