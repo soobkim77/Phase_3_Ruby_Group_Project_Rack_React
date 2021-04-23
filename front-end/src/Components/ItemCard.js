@@ -19,14 +19,14 @@ const ItemCard = (props) => {
           </Card.Meta>
         </Card.Content>
         <Card.Content extra>
-          <a>
+          <span>
             <Icon name='dollar' />
             {props.item.price} 
-          </a>
+          </span>
           {props.myPage ? 
-            <a className="ui right floated">
-              <Icon name='delete' id={props.item.id} onClick={()=>props.remove(props.item)}/>
-            </a>
+            <span className="ui right floated">
+              <Icon name='delete' id={props.item.id} onClick={(e)=>props.remove(e, props.item)}/>
+            </span>
           : 
             null}
         </Card.Content>
